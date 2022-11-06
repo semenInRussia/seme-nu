@@ -59,7 +59,7 @@ let-env config = {
   rm_always_trash: false
   color_config: $dark_theme
   use_grid_icons: true
-  footer_mode: always # always, never, number_of_rows, auto
+  footer_mode: 16
   quick_completions: true
   partial_completions: true
   completion_algorithm: "fuzzy"  # prefix, fuzzy
