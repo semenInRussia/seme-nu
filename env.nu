@@ -1,10 +1,17 @@
 # Nushell Environment Config File
 
 def create_left_prompt [] {
-    let path_segment = if (is-admin) {
-        $"(ansi red_bold)($env.PWD)"
+    let home = ("~" | path expand)
+    let dir = if ($env.PWD | str starts-with $home) {
+      ($env.PWD | path relative-to $home)
     } else {
-        $"(ansi green_bold)($env.PWD)"
+      $env.PWD
+    }
+
+    let path_segment = if (is-admin) {
+        $"(ansi red_bold)($dir)"
+    } else {
+        $"(ansi green_bold)($dir)"
     }
 
     $path_segment
