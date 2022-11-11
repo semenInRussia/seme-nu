@@ -21,11 +21,20 @@ export extern "pp" [
   subcommand: string@pp-subcommand
 ]
 
-def pj-subcommand [] {
-  [clear list c l]
-}
-
 export extern "pj" [
   --help(-h)
   subcommand: string@pj-subcommand
 ]
+
+def "pj list" [
+] {
+  ^pj list
+  | lines
+  | parse "{id}. <{timestamp}>   {printed_pages}/{total_pages}          {filename}"
+}
+
+alias "pj l" = pj list
+
+def pj-subcommand [] {
+  [clear list c l]
+}
