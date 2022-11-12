@@ -59,7 +59,7 @@ let-env config = {
   rm_always_trash: false
   color_config: $dark_theme
   use_grid_icons: true
-  footer_mode: 16
+  footer_mode: 16 # when number of rows in table exceeds 16 show footer
   quick_completions: true
   partial_completions: true
   completion_algorithm: "fuzzy"  # prefix, fuzzy
@@ -322,8 +322,6 @@ let-env config = {
   ]
 }
 
-alias em = emacsclient
-
 def alphabet [] {
   [a b c d e f g h i j k l m n o p q r s t u v w x y z]
 }
@@ -334,6 +332,7 @@ source zoxide.nu    # awesome alternative to built-in cd
 source p.nu         # printers management
 source git.nu
 source pandoc.nu
+source emacs.nu
 
 source cargo.nu
 source make.nu

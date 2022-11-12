@@ -59,5 +59,3 @@ let-env NU_PLUGIN_DIRS = [
 
 # let-env PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 
-let-env EDITOR = "emacsclient -t"
-let-env VISUAL = "emacsclient"
