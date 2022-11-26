@@ -2,6 +2,7 @@
 let-env config = ($env | default {} config).config
 let-env config = ($env.config | default {} hooks)
 let-env config = ($env.config | update hooks ($env.config.hooks | default {} env_change))
+
 let-env config = ($env.config | update hooks.env_change ($env.config.hooks.env_change | default [] PWD))
 let-env config = ($env.config | update hooks.env_change.PWD ($env.config.hooks.env_change.PWD | append {|_, dir|
   zoxide add -- $dir
@@ -14,7 +15,6 @@ let-env config = ($env.config | update hooks.env_change.PWD ($env.config.hooks.e
 
 # Jump to a directory using only keywords.
 def-env __zoxide_z [...rest:string] {
-  # `z -` does not work yet, see https://github.com/nushell/nushell/issues/4769
   let arg0 = ($rest | append '~').0
   let path = if (($rest | length) <= 1) && ($arg0 == '-' || ($arg0 | path expand | path type) == dir) {
     $arg0

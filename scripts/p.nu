@@ -1,7 +1,3 @@
-def filenames [] {
-  ls | where type == file | get name
-}
-
 export extern "pf" [
   --pages: string
   --even(-e)
@@ -9,11 +5,13 @@ export extern "pf" [
   --amount(-n): int
   --2side
   --help
-  filename: string@filenames
+  filename: string
 ]
 
 def pp-subcommand [] {
-  [cs]
+  [
+    cs
+  ]
 }
 
 export extern "pp" [
@@ -26,8 +24,7 @@ export extern "pj" [
   subcommand: string@pj-subcommand
 ]
 
-def "pj list" [
-] {
+def "pj list" [] {
   ^pj list
   | lines
   | parse "{id}. <{timestamp}>   {printed_pages}/{total_pages}          {filename}"
@@ -36,5 +33,7 @@ def "pj list" [
 alias "pj l" = pj list
 
 def pj-subcommand [] {
-  [clear list c l]
+  [
+    clear list c l
+  ]
 }

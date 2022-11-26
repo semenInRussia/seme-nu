@@ -3,6 +3,7 @@
 def "nu-complete cargo targets" [type: string] {
   ^cargo metadata --format-version=1 --offline --no-deps | from json | get packages.targets | flatten | where ($type in $it.kind) | get name
 }
+
 def "nu-complete cargo bins" [] { nu-complete cargo targets bin }
 def "nu-complete cargo examples" [] { nu-complete cargo targets example }
 
@@ -10,7 +11,7 @@ def "nu-complete cargo packages" [] {
   let metadata = (^cargo metadata --format-version=1 --offline --no-deps)
   if $metadata == '' {
     []
-  } else {
+    } else {
     $metadata | from json | get workspace_members | split column ' ' | get column1
   }
 }
@@ -261,7 +262,7 @@ export extern "cargo run" [
 # Run the tests
 export extern "cargo test" [
   test_arg_seperator?: string
-   ...args: any        # Arguments to be passed to the tests
+  ...args: any        # Arguments to be passed to the tests
   --no-run       # Compile, but don't run tests
   --no-fail-fast # Run all tests regardless of failure
   --package(-p): string@"nu-complete cargo packages" # Test only the specified packages
@@ -490,10 +491,10 @@ export extern "cargo help" [
 
 # A bunch of lints to catch common mistakes and improve your Rust code
 export extern "cargo clippy" [
-        --no-deps      # Run Clippy only on the given crate, without linting the dependencies
-        --fix          # Automatically apply lint suggestions. This flag implies `--no-deps
-        --version(-V)  # Prints version information
-        --help(-h)     # Prints help information
+  --no-deps      # Run Clippy only on the given crate, without linting the dependencies
+  --fix          # Automatically apply lint suggestions. This flag implies `--no-deps
+  --version(-V)  # Prints version information
+  --help(-h)     # Prints help information
 ]
 
 # Parameters from cargo update

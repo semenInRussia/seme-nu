@@ -72,7 +72,7 @@ let-env config = {
   sync_history_on_enter: true
   history_file_format: "plaintext"
   shell_integration: true
-  table_index_mode: always
+  table_index_mode: never
   cd_with_abbreviations: true
   case_sensitive_completions: true
   enable_external_completion: true
@@ -338,3 +338,5 @@ source cargo.nu
 source make.nu
 source npm.nu
 source winget.nu
+source how2.nu
+source ddgr.nu

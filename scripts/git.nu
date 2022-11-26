@@ -148,7 +148,7 @@ export extern "git remote --verbose" []
 export extern "git remote add" [
   remotename: string                     # Name of the remote binding (origin)
   url: string                            # URL of the Git repository
-       -m: string@"nu-complete git branches"  # Name of the main remote branch
+  -m: string@"nu-complete git branches"  # Name of the main remote branch
   -f                                     # Force?
 ]
 
