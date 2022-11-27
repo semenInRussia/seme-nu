@@ -1,16 +1,18 @@
-export extern "npm" [
-  command: string@"nu-complete npm"
+# install a node.js tool
+export extern "npm install" [
+  --global(-g)                  # install a tool globally
+  --save-dev                    # install a tool as tool for the develop
+  --save-prod                   # install a tool as tool for the production
+  tool: string                  # name of a tool for install
 ]
 
-def "nu-complete npm" [] {
-  ^npm -l
-  | lines
-  | find 'Run "'
-  | str trim
-  | split column -c ' '
-  | get column4
-  | str replace '"' ''
-}
+alias "npm i" = npm install
+alias "npm in" = npm install
+alias "npm inst" = npm install
+alias "npm insta" = npm install
+alias "npm instal" = npm install
+alias "npm add" = npm install
+
 
 def "nu-complete npm run" [] {
   open ./package.json
