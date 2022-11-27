@@ -3,7 +3,7 @@ export extern "npm install" [
   --global(-g)                  # install a tool globally
   --save-dev                    # install a tool as tool for the develop
   --save-prod                   # install a tool as tool for the production
-  tool: string                  # name of a tool for install
+  tool?: string                 # tool name to install (if missed, install project's dependecies)
 ]
 
 alias "npm i" = npm install
