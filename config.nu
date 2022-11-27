@@ -340,3 +340,4 @@ source npm.nu
 source winget.nu
 source how2.nu
 source ddgr.nu
+source cowsay.nu
