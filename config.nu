@@ -328,8 +328,10 @@ def alphabet [] {
 
 # The following files placed in the directory scripts, located
 # in the same directory as $nu.config-path
-source zoxide.nu    # awesome alternative to built-in cd
-source p.nu         # printers management
+source zoxide.nu                # awesome alternative to built-in cd
+source p.nu                     # printers management
+source tar.nu                   # printers management
+source quickpoeter.nu           # rhyme finder for russian language
 source git.nu
 source pandoc.nu
 source emacs.nu

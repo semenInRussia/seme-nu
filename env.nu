@@ -18,9 +18,7 @@ def create_left_prompt [] {
 }
 
 def create_right_prompt [] {
-  let time_segment = ([
-    (date now | date format '%d.%m.%Y %H:%M.%S')
-  ] | str join)
+  let time_segment = ([(date now | date format '%d.%m.%Y %H:%M.%S')] | str join)
 
   $time_segment
 }
@@ -34,9 +32,7 @@ let-env PROMPT_COMMAND_RIGHT = {
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
-let-env PROMPT_INDICATOR = {
-  "~  "
-}
+let-env PROMPT_INDICATOR = "〉"
 let-env PROMPT_INDICATOR_VI_INSERT = {
   ": "
 }
