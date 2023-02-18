@@ -332,6 +332,7 @@ source zoxide.nu                # awesome alternative to built-in cd
 source p.nu                     # printers management
 source tar.nu                   # printers management
 source quickpoeter.nu           # rhyme finder for russian language
+source lapce.nu
 source git.nu
 source pandoc.nu
 source emacs.nu
