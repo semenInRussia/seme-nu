@@ -31,7 +31,7 @@ def "nu-complete cargo features" [] {
 # `cargo --list` is slow, `open` is faster.
 # TODO: Add caching.
 def "nu-complete cargo subcommands" [] {
-  ^cargo --list | lines | skip 1 | str collect "\n" | from ssv --noheaders | get column1
+  ^cargo --list | lines | skip 1 | str join "\n" | from ssv --noheaders | get column1
 }
 def "nu-complete cargo vcs" [] {
   [
@@ -306,39 +306,38 @@ export extern "cargo test" [
 # Execute benchmarks of a package
 export extern "cargo bench" [
   bench_option_seperator?: string
-  # ...options?: any # Options to be passed to the benchmarks
-  --no-run # Compile, but don't run benchmarks
-  --no-fail-fast # Run all benchmarks regardless of failure
+  --message-format: string # The output format for diagnostic messages
+  --color: string@"nu-complete cargo color"  # Control when colored output is used
+  --quiet(-q) # Do not print cargo log messages
+  --verbose(-v) # Use verbose output. May be specified twice for "very verbose" output
+  --target-dir: path # Directory for all generated artifacts and intermediate files
+  --timings: string # Output information how long each compilation takes
   --package(-p): string@"nu-complete cargo packages" # Benchmark only the specified packages
-  --workspace # Benchmark all members in the workspace
   --exclude: string@"nu-complete cargo packages" # Exclude the specified packages
-  --lib # Benchmark the package's library
-  --bin: string@"nu-complete cargo bins" # Benchmark only the specified binary
-  --bins # Benchmark all binary targets
   --example: string@"nu-complete cargo examples" # Benchmark only the specified example
-  --examples # Benchmark all example targets
+  --bin: string@"nu-complete cargo bins" # Benchmark only the specified binary
   --test: string # Benchmark the specified integration test
-  --tests # Benchmark all targets in test mode that have the test = true
   --bench: string # Benchmark the specified benchmark
-  --benches # Benchmark all targets in benchmark mode that have the bench = true manifest flag set
-  --all-targets # Benchmark all targets
   --features: string@"nu-complete cargo features" # Space or comma separated list of features to activate
-  --all-features # Activate all available features of all selected packages
-  --no-default-features # Do not activate the default feature of the selected packages
   --target: string # Benchmark for the given architecture
   --profile: string@"nu-complete cargo profiles" # Build artifacts with the specified profile
-  --ignore-rust-version # Ignore `rust-version` specification in packages
-  --timings: string # Output information how long each compilation takes
-  --target-dir: path# Directory for all generated artifacts and intermediate files
-  --verbose(-v) # Use verbose output. May be specified twice for "very verbose" output
-  --quiet(-q) # Do not print cargo log messages
-  --color: string@"nu-complete cargo color"  # Control when colored output is used
-  --message-format: string # The output format for diagnostic messages
+  --no-run # Compile, but don't run benchmarks
+  --no-fail-fast # Run all benchmarks regardless of failure
+  --workspace # Benchmark all members in the workspace
+  --lib # Benchmark the package's library
+  --bins # Benchmark all binary targets
+  --examples # Benchmark all example targets
+  --tests # Benchmark all targets in test mode that have the test = true
+  --benches # Benchmark all targets in benchmark mode that have the bench = true manifest flag set
+  --all-targets # Benchmark all targets
+  --all-features # Activate all available features of all selected packages
+  --no-default-features # Do not activate the default feature of the selected packages
+  --ignore-rust-version # Ignore `rust-version` specification in
   --build-plan # Outputs a series of JSON messages to stdout that indicate the commands to run the build
   --manifest-path: path  # Path to the Cargo.toml file
   --frozen # Require Cargo.lock and cache are up to date
   --locked # Require Cargo.lock is up to date
-  --offline# Run without accessing the network
+  --offline # Run without accessing the network
   -Z: any # Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
   -h, --help # Print help information
   --jobs(-j): number # Number of parallel jobs to run

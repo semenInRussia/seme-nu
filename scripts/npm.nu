@@ -1,7 +1,7 @@
 # install a node.js tool
 export extern "npm install" [
   --global(-g)                  # install a tool globally
-  --save-dev                    # install a tool as tool for the develop
+  --save-dev(-D)                # install a tool as tool for the develop
   --save-prod                   # install a tool as tool for the production
   ...tool: string               # tools names to install (if missed, install project's dependecies)
 ]

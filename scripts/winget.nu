@@ -79,9 +79,9 @@ def "winget show" [
         (do $flagify header $header)
         (do $flagify accept_source_agreements $accept_source_agreements)
         (do $flagify help $help)
-    ] | str collect ' ')
+    ] | str join ' ')
 
-    if $raw || $help {
+    if $raw or $help {
         ^$command
     } else {
         let output = (^$command | lines)
@@ -92,8 +92,8 @@ def "winget show" [
             $"(ansi yellow)($output | first | str trim)(ansi reset)"
         } else {
             let header = ($output | first | parse -r 'Found (?P<Name>.+) \[(?P<Id>.+)\]')
-            let manifest = ($output | skip 1 | str collect (char newline) | from yaml)
-            $header | first | merge { $manifest }
+            let manifest = ($output | skip 1 | str join (char newline) | from yaml)
+            $header | first | merge {|| $manifest }
         }
     }
 }
@@ -127,9 +127,9 @@ def "winget source list" [
         $pos_name
         (do $flagify name $name)
         (do $flagify help $help)
-    ] | str collect ' ')
+    ] | str join ' ')
 
-    if $raw || $help {
+    if $raw or $help {
         ^$command
     } else {
         let output = (^$command | lines)
@@ -200,9 +200,9 @@ def "winget search" [
         (do $flagify header $header)
         (do $flagify accept_source_agreements $accept_source_agreements)
         (do $flagify help $help)
-    ] | str collect ' ')
+    ] | str join ' ')
 
-    if $raw || $help {
+    if $raw or $help {
         ^$command
     } else {
         let output = (^$command | lines)
@@ -248,9 +248,9 @@ def "winget list" [
         (do $flagify header $header)
         (do $flagify accept_source_agreements $accept_source_agreements)
         (do $flagify help $help)
-    ] | str collect ' ')
+    ] | str join ' ')
 
-    if $help || $raw {
+    if $help or $raw {
         ^$command
     } else {
         let output = (^$command | lines)
@@ -374,7 +374,7 @@ def "nu-complete winget source type" [] {
 
 def "nu-complete winget flagify" [name: string, value: any, --short(-s): bool] {
   let flag_start = if $short { '-' } else { '--' }
-  if $value == $nothing || $value == false {
+  if $value == $nothing or $value == false {
     ""
   } else if $value == true {
     $"($flag_start)($name)"
@@ -397,7 +397,7 @@ def "nu-complete winget uninstall package name" [] {
 def "nu-complete winget install name" [] {
     let path = ($env.TMP | path join winget-packages.csv)
 
-    let completions = if ($path | path exists) && (ls $path | first | get modified | ((date now) - $in) < 1day) {
+    let completions = if ($path | path exists) and (ls $path | first | get modified | ((date now) - $in) < 1day) {
         open $path | get name | each { |it| $"(char dq)($it)(char dq)" } | str replace "…" ""
     } else {
         # Chinese characters break parsing, filter broken entries with `where source == winget`
@@ -417,7 +417,7 @@ def "nu-complete winget install name" [] {
 def "nu-complete winget install id" [] {
     let path = ($env.TMP | path join winget-packages.csv)
 
-    if ($path | path exists) && (ls $path | first | get modified | ((date now) - $in) < 1day) {
+    if ($path | path exists) and (ls $path | first | get modified | ((date now) - $in) < 1day) {
         open $path | get id | str replace "…" ""
     } else {
         # Chinese characters break parsing, filter broken entries with `where source == winget`
@@ -446,27 +446,27 @@ def "nu-complete winget parse table" [lines: any] {
         let version = if $lengths.version > 0 {
             (
                 $it | skip ($lengths.name + $lengths.id)
-                | first $lengths.version | str collect | str trim
+                | first $lengths.version | str join | str trim
             )
         } else { "" }
 
         let available = if $lengths.available > 0 {
             (
                 $it | skip ($lengths.name + $lengths.id + $lengths.version)
-                | first $lengths.available | str collect | str trim
+                | first $lengths.available | str join | str trim
             )
         } else { "" }
 
         let source = if $lengths.source > 0 {
             (
                 $it | skip ($lengths.name + $lengths.id + $lengths.version + $lengths.available)
-                | str collect | str trim
+                | str join | str trim
             )
         } else { "" }
 
         {
-            name: ($it | first $lengths.name | str collect | str trim),
-            id: ($it | skip $lengths.name | first $lengths.id | str collect | str trim),
+            name: ($it | first $lengths.name | str join | str trim),
+            id: ($it | skip $lengths.name | first $lengths.id | str join | str trim),
             version: $version,
             available: $available,
             source: $source
