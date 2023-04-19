@@ -470,3 +470,6 @@ source how2.nu
 source ddgr.nu
 source cowsay.nu
 source eldev.nu
+source rome.nu
+source esbuild.nu
+source dum.nu
